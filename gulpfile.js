@@ -7,8 +7,16 @@ var gulp = require('gulp'),
     uglify = require('gulp-uglify'),
     rename = require('gulp-rename'),
     jshint = require('gulp-jshint'),
-    minifyCSS = require('gulp-minify-css');
+    minifyCSS = require('gulp-minify-css'),
+    jade = require('gulp-jade');
 
+
+// 編譯 jade 任務
+gulp.task('jade', function () {
+  gulp.src('./src/jade/*.jade')
+  .pipe(jade())
+  .pipe(gulp.dest('./'))
+});
 //開啟伺服器
 gulp.task('connect', function() {
     connect.server();
@@ -49,13 +57,14 @@ gulp.task('minify-css', function() {
 //livereload
 gulp.task('livereload', function () {  
     livereload.listen();
-    gulp.watch('./**').on('change', livereload.changed);
+    gulp.watch('*.*').on('change', livereload.changed);
 });
 //watch
 gulp.task('watch', function () {  
      gulp.watch('./src/sass/*.sass', ['compass']);
      gulp.watch('./dist/css/*.css', ['minify-css']);
      gulp.watch('./src/js/*.js', ['lint','scripts']);
+     gulp.watch('./src/jade/*.jade', ['jade']);
 });
 
 gulp.task('default', 
@@ -66,6 +75,7 @@ gulp.task('default',
   'livereload',
   'scripts',
   'lint',
-  'minify-css'], function(){
+  'minify-css',
+  'jade'], function(){
     
 });
