@@ -8,7 +8,8 @@ var gulp = require('gulp'),
     rename = require('gulp-rename'),
     jshint = require('gulp-jshint'),
     minifyCSS = require('gulp-minify-css'),
-    jade = require('gulp-jade');
+    jade = require('gulp-jade'),
+    browserSync = require('browser-sync');
 
 
 // 編譯 jade 任務
@@ -59,6 +60,14 @@ gulp.task('livereload', function () {
     livereload.listen();
     gulp.watch('*.*').on('change', livereload.changed);
 });
+//跨載具
+gulp.task('browser-sync', function() {
+    browserSync.init(['./*.*','./**'], {
+        server: {
+            baseDir: "./"
+        }
+    });
+});
 //watch
 gulp.task('watch', function () {  
      gulp.watch('./src/sass/*.sass', ['compass']);
@@ -76,6 +85,7 @@ gulp.task('default',
   'scripts',
   'lint',
   'minify-css',
-  'jade'], function(){
+  'jade',
+  'browser-sync'], function(){
     
 });
