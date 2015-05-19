@@ -1,9 +1,12 @@
 body {
-  background: yellow;
+  background: #000;
   color: red;
 }
 
 .one {
-  color: white;
+  color: #fff;
   width: 500px;
+  width: 73.68421%;
+  float: left;
+  margin-right: 5.26316%;
 }

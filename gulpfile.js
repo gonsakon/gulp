@@ -10,13 +10,12 @@ var gulp = require('gulp'),
     minifyCSS = require('gulp-minify-css'),
     jade = require('gulp-jade'),
     browserSync = require('browser-sync');
-
-
+    coffee = require('gulp-coffee');
 // 編譯 jade 任務
 gulp.task('jade', function () {
   gulp.src('./src/jade/*.jade')
   .pipe(jade())
-  .pipe(gulp.dest('./'))
+  .pipe(gulp.dest('./'));
 });
 //開啟伺服器
 gulp.task('connect', function() {
@@ -29,9 +28,10 @@ gulp.task('lint', function() {
         .pipe(jshint.reporter('default'));
 });
 //合併與壓縮js
-gulp.task('scripts', function() {
-    gulp.src('./src/js/*.js')
-      .pipe(concat('all.js'))
+gulp.task('coffee', function() {
+    gulp.src(['./src/coffee/*.coffee'])
+      .pipe(concat('all.coffee'))
+      .pipe(coffee())
       .pipe(gulp.dest('./dist/js'))
       .pipe(rename('all.min.js'))
       .pipe(uglify())
@@ -43,16 +43,17 @@ gulp.task('compass', function() {
   .pipe(compass({
     config_file: './src/config.rb',
     css: './dist/css',
-    sass: './src/sass'
+    sass: './src/sass',
+    require: ['susy','breakpoint']
   }))
-  .pipe(gulp.dest('./dist/css'))
+  .pipe(gulp.dest('./dist/css'));
 });
 //壓縮CSS
 gulp.task('minify-css', function() {
   gulp.src('./dist/css/all.css')
     .pipe(minifyCSS())
     .pipe(rename('all.min.css'))
-    .pipe(gulp.dest('./dist/css'))
+    .pipe(gulp.dest('./dist/css'));
 });
 
 //livereload
@@ -72,7 +73,7 @@ gulp.task('browser-sync', function() {
 gulp.task('watch', function () {  
      gulp.watch('./src/sass/*.sass', ['compass']);
      gulp.watch('./dist/css/*.css', ['minify-css']);
-     gulp.watch('./src/js/*.js', ['lint','scripts']);
+     gulp.watch('./src/coffee/*/*', ['coffee']);
      gulp.watch('./src/jade/*.jade', ['jade']);
 });
 
@@ -82,10 +83,10 @@ gulp.task('default',
   'connect',
   'watch',
   'livereload',
-  'scripts',
-  'lint',
   'minify-css',
   'jade',
-  'browser-sync'], function(){
+  'lint',
+  'coffee'
+  ], function(){
     
 });

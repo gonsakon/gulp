@@ -1,0 +1,25 @@
+{
+  "name": "bower-template",
+  "version": "1",
+  "authors": [
+    "liao"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {},
+  "homepage": "https://github.com/gonsakon/gulp",
+  "description": "bowser-template",
+  "main": "bower",
+  "keywords": [
+    "bower"
+  ],
+  "devDependencies": {
+    "jquery": "1.11.2"
+  }
+}

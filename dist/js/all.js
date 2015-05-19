@@ -1,3 +1,8 @@
-var index = 'index';
+(function() {
+  var index, page;
 
-var page = 'page';
+  index = 'index';
+
+  page = 'qq';
+
+}).call(this);
